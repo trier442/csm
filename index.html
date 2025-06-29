@@ -103,6 +103,7 @@
         <nav class="mb-8 bg-white rounded-lg shadow-md">
             <div id="tab-container" class="flex border-b border-gray-200 overflow-x-auto">
                 <!-- Tabs will be inserted here by JS -->
+                <a href="test1.html" class="tab">추가시험</a>
             </div>
         </nav>
 
@@ -485,12 +486,21 @@
             // --- Initialization ---
             const tests = Object.keys(examData);
             tests.forEach((testId) => {
-                const tab = document.createElement('a');
-                tab.className = 'tab';
-                tab.textContent = examData[testId].title;
-                tab.dataset.id = testId;
-                tab.addEventListener('click', () => switchTab(testId));
-                tabContainer.appendChild(tab);
+                if (examData[testId].link) {
+                    const tab = document.createElement('a');
+                    tab.className = 'tab';
+                    tab.textContent = examData[testId].title;
+                    tab.href = examData[testId].link;
+                    tab.target = "_blank"; // Open in new tab
+                    tabContainer.appendChild(tab);
+                } else {
+                    const tab = document.createElement('a');
+                    tab.className = 'tab';
+                    tab.textContent = examData[testId].title;
+                    tab.dataset.id = testId;
+                    tab.addEventListener('click', () => switchTab(testId));
+                    tabContainer.appendChild(tab);
+                }
             });
             
             // 초기 로드 시 첫 번째 탭 활성화
